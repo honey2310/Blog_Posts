@@ -24,28 +24,22 @@ export const loginUser = createAsyncThunk(
 // ---------------------------------------------
 // FETCH POSTS
 // ---------------------------------------------
-export const fetchPosts = createAsyncThunk(
-  "posts/fetchPosts",
-  async () => {
-    const res = await fetch("http://localhost:3000/posts");
-    return await res.json();
-  }
-);
+export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
+  const res = await fetch("http://localhost:3000/posts");
+  return await res.json();
+});
 
 // ---------------------------------------------
 // ADD POST
 // ---------------------------------------------
-export const addPost = createAsyncThunk(
-  "posts/addPost",
-  async (postData) => {
-    const res = await fetch("http://localhost:3000/posts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(postData),
-    });
-    return await res.json();
-  }
-);
+export const addPost = createAsyncThunk("posts/addPost", async (postData) => {
+  const res = await fetch("http://localhost:3000/posts", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(postData),
+  });
+  return await res.json();
+});
 
 // ---------------------------------------------
 // UPDATE POST
@@ -65,15 +59,12 @@ export const updatePost = createAsyncThunk(
 // ---------------------------------------------
 // DELETE POST
 // ---------------------------------------------
-export const deletePost = createAsyncThunk(
-  "posts/deletePost",
-  async (id) => {
-    await fetch(`http://localhost:3000/posts/${id}`, {
-      method: "DELETE",
-    });
-    return id;
-  }
-);
+export const deletePost = createAsyncThunk("posts/deletePost", async (id) => {
+  await fetch(`http://localhost:3000/posts/${id}`, {
+    method: "DELETE",
+  });
+  return id;
+});
 
 // ---------------------------------------------
 // SLICE
@@ -85,11 +76,19 @@ const postSlice = createSlice({
     user: null,
     loading: false,
     error: null,
+    sortOption: null,
+    filterCategory: null,
   },
 
   reducers: {
     logout(state) {
       state.user = null;
+    },
+    setSortOption: (state, action) => {
+      state.sortOption = action.payload;
+    },
+    setFilterCategory: (state, action) => {
+      state.filterCategory = action.payload;
     },
   },
 

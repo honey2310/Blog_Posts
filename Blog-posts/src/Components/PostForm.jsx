@@ -7,11 +7,7 @@ export default function PostForm() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const { posts } = useSelector((state) => state.blog);
-
-  const existingPost =
-    posts?.length > 0 ? posts.find((p) => p.id === Number(id)) : null;
 
   const [form, setForm] = useState({
     title: "",
@@ -21,31 +17,43 @@ export default function PostForm() {
     category: "",
   });
 
+  // Wait until posts are loaded
   useEffect(() => {
-    if (posts.length === 0) {
-      dispatch(fetchPosts());
-    }
+    if (posts.length === 0) dispatch(fetchPosts());
   }, [dispatch, posts.length]);
 
+  // Populate form only when posts are loaded
   useEffect(() => {
-    if (existingPost) {
-      setForm(existingPost);
+    if (id && posts.length > 0) {
+      const postToEdit = posts.find((p) => p.id === Number(id));
+      if (postToEdit) setForm(postToEdit);
     }
-  }, [existingPost]);
+  }, [id, posts]);
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (id) {
-      // EDIT MODE
-      dispatch(updatePost({ ...form, id: Number(id) }));
+      const postToUpdate = posts.find((p) => p.id === Number(id));
+      if (!postToUpdate) return alert("Post not found!");
+
+      // Merge existing post with form values
+      const payload = { ...postToUpdate, ...form, id: Number(id) };
+
+      await dispatch(updatePost(payload));
     } else {
-      // ADD MODE
-      dispatch(addPost(form));
+      await dispatch(addPost(form));
     }
 
     navigate("/");
   };
+
+  // Prevent form render if editing and posts not loaded yet
+  if (id && posts.length === 0) return <p>Loading...</p>;
 
   return (
     <div className="max-w-xl mx-auto mt-10 bg-white shadow-lg rounded-xl p-8">
@@ -61,6 +69,7 @@ export default function PostForm() {
           value={form.title}
           onChange={handleChange}
           className="w-full px-4 py-2 border rounded-lg"
+          required
         />
 
         <textarea
@@ -70,6 +79,7 @@ export default function PostForm() {
           onChange={handleChange}
           rows="5"
           className="w-full px-4 py-2 border rounded-lg"
+          required
         />
 
         <input
@@ -78,6 +88,7 @@ export default function PostForm() {
           value={form.date}
           onChange={handleChange}
           className="w-full px-4 py-2 border rounded-lg"
+          required
         />
 
         <input
@@ -92,10 +103,11 @@ export default function PostForm() {
         <input
           type="text"
           name="category"
-          placeholder="Category (e.g. Tech, Travel)"
+          placeholder="Category"
           value={form.category}
           onChange={handleChange}
           className="w-full px-4 py-2 border rounded-lg"
+          required
         />
 
         <button
