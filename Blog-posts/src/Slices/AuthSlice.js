@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-// ---------------------------------------------
-// LOGIN THUNK
-// ---------------------------------------------
+// ------------------- LOGIN -------------------
 export const loginUser = createAsyncThunk(
   "posts/loginUser",
   async ({ email, password }, { rejectWithValue }) => {
@@ -13,37 +11,34 @@ export const loginUser = createAsyncThunk(
       (u) => u.email === email && u.password === password
     );
 
-    if (!user) {
-      return rejectWithValue("Invalid email or password");
-    }
-
+    if (!user) return rejectWithValue("Invalid email or password");
     return user;
   }
 );
 
-// ---------------------------------------------
-// FETCH POSTS
-// ---------------------------------------------
-export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
-  const res = await fetch("http://localhost:3000/posts");
-  return await res.json();
-});
+// ------------------- FETCH POSTS -------------------
+export const fetchPosts = createAsyncThunk(
+  "posts/fetchPosts",
+  async () => {
+    const res = await fetch("http://localhost:3000/posts");
+    return await res.json();
+  }
+);
 
-// ---------------------------------------------
-// ADD POST
-// ---------------------------------------------
-export const addPost = createAsyncThunk("posts/addPost", async (postData) => {
-  const res = await fetch("http://localhost:3000/posts", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(postData),
-  });
-  return await res.json();
-});
+// ------------------- ADD POST -------------------
+export const addPost = createAsyncThunk(
+  "posts/addPost",
+  async (postData) => {
+    const res = await fetch("http://localhost:3000/posts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(postData),
+    });
+    return await res.json();
+  }
+);
 
-// ---------------------------------------------
-// UPDATE POST
-// ---------------------------------------------
+// ------------------- UPDATE POST -------------------
 export const updatePost = createAsyncThunk(
   "posts/updatePost",
   async (postData) => {
@@ -56,19 +51,16 @@ export const updatePost = createAsyncThunk(
   }
 );
 
-// ---------------------------------------------
-// DELETE POST
-// ---------------------------------------------
-export const deletePost = createAsyncThunk("posts/deletePost", async (id) => {
-  await fetch(`http://localhost:3000/posts/${id}`, {
-    method: "DELETE",
-  });
-  return id;
-});
+// ------------------- DELETE POST -------------------
+export const deletePost = createAsyncThunk(
+  "posts/deletePost",
+  async (id) => {
+    await fetch(`http://localhost:3000/posts/${id}`, { method: "DELETE" });
+    return id;
+  }
+);
 
-// ---------------------------------------------
-// SLICE
-// ---------------------------------------------
+// ------------------- SLICE -------------------
 const postSlice = createSlice({
   name: "posts",
   initialState: {
@@ -76,56 +68,35 @@ const postSlice = createSlice({
     user: null,
     loading: false,
     error: null,
-    sortOption: null,
-    filterCategory: null,
   },
-
   reducers: {
     logout(state) {
       state.user = null;
     },
-    setSortOption: (state, action) => {
-      state.sortOption = action.payload;
-    },
-    setFilterCategory: (state, action) => {
-      state.filterCategory = action.payload;
-    },
   },
-
   extraReducers: (builder) => {
     builder
-      // ---------------- LOGIN ----------------
-      .addCase(loginUser.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(loginUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload;
-      })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
+      // LOGIN
+      .addCase(loginUser.pending, (state) => { state.loading = true; state.error = null; })
+      .addCase(loginUser.fulfilled, (state, action) => { state.loading = false; state.user = action.payload; })
+      .addCase(loginUser.rejected, (state, action) => { state.loading = false; state.error = action.payload; })
 
-      // --------------- FETCH POSTS ---------------
-      .addCase(fetchPosts.fulfilled, (state, action) => {
-        state.posts = action.payload;
-      })
+      // FETCH POSTS
+      .addCase(fetchPosts.pending, (state) => { state.loading = true; })
+      .addCase(fetchPosts.fulfilled, (state, action) => { state.loading = false; state.posts = action.payload; })
+      .addCase(fetchPosts.rejected, (state, action) => { state.loading = false; state.error = action.error.message; })
 
-      // --------------- ADD POST ---------------
-      .addCase(addPost.fulfilled, (state, action) => {
-        state.posts.push(action.payload);
-      })
+      // ADD POST
+      .addCase(addPost.fulfilled, (state, action) => { state.posts.push(action.payload); })
 
-      // --------------- UPDATE POST ---------------
+      // UPDATE POST
       .addCase(updatePost.fulfilled, (state, action) => {
         state.posts = state.posts.map((p) =>
           p.id === action.payload.id ? action.payload : p
         );
       })
 
-      // --------------- DELETE POST ---------------
+      // DELETE POST
       .addCase(deletePost.fulfilled, (state, action) => {
         state.posts = state.posts.filter((p) => p.id !== action.payload);
       });

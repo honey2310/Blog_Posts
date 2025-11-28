@@ -9,29 +9,54 @@ export default function PostDetails() {
   const post = posts.find((p) => p.id === Number(id));
 
   if (!post)
-    return <p className="text-center mt-20 text-gray-600">Post not found.</p>;
+    return (
+      <p className="text-center mt-20 text-gray-500 text-lg">
+        Post not found.
+      </p>
+    );
 
   return (
-    <div className="max-w-3xl mx-auto py-10 px-4">
+    <div className="max-w-4xl mx-auto py-12 px-6">
+      {/* Image */}
+      <div className="relative rounded-xl overflow-hidden shadow-lg">
+        <img
+          src={post.image}
+          alt={post.title}
+          className="w-full h-80 object-cover transition-transform duration-300 hover:scale-105"
+        />
+      </div>
 
-      <img src={post.image} alt="" className="w-full rounded-lg shadow" />
+      {/* Title */}
+      <h1 className="text-5xl font-extrabold mt-8 text-gray-900">{post.title}</h1>
 
-      <h1 className="text-4xl font-bold mt-6">{post.title}</h1>
+      {/* Category & Date */}
+      <div className="flex flex-wrap items-center gap-4 mt-3 text-gray-400">
+        {post.category && (
+          <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+            {post.category}
+          </span>
+        )}
+        <span className="text-sm">{new Date(post.date).toLocaleDateString()}</span>
+      </div>
 
-      <p className="text-gray-500 mt-2">
-        {post.date} • {post.category}
-      </p>
+      {/* Description */}
+      <p className="mt-6 text-gray-700 text-lg leading-relaxed">{post.description}</p>
 
-      <p className="text-lg text-gray-700 mt-4 leading-relaxed">
-        {post.description}
-      </p>
-
-      <Link
-        to={`/edit/${post.id}`}
-        className="mt-6 inline-block text-blue-600 hover:underline"
-      >
-        Edit Post
-      </Link>
+      {/* Actions */}
+      <div className="mt-8 flex gap-4">
+        <Link
+          to={`/edit/${post.id}`}
+          className="bg-green-600 text-white px-5 py-2 rounded-lg shadow hover:bg-green-700 transition font-medium"
+        >
+          Edit Post
+        </Link>
+        <Link
+          to="/"
+          className="bg-gray-200 text-gray-800 px-5 py-2 rounded-lg shadow hover:bg-gray-300 transition font-medium"
+        >
+          Back to Blog
+        </Link>
+      </div>
     </div>
   );
 }

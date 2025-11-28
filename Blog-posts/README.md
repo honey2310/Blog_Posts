@@ -1,16 +1,152 @@
-# React + Vite
+📘 React Blog App — README.md
+📝 Project Overview
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The React Blog App is a full-featured blogging platform built using React JS, Redux Toolkit, React Router, Bootstrap, and JSON Server.
+It allows users to view, add, edit, delete, sort, and filter blog posts, along with a simple login authentication system.
 
-Currently, two official plugins are available:
+This project is designed as part of the React JS Practical Exam.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🚀 Features
+🧩 Core Features
 
-## React Compiler
+View all blog posts
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Add new blog posts
+(title, description, date, image, category)
 
-## Expanding the ESLint configuration
+Edit existing posts
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Delete posts
+
+View post details
+
+🔐 Authentication
+
+User Login (using JSON Server /users endpoint)
+
+Only authenticated users can:
+
+Add posts
+
+Edit posts
+
+Delete posts
+
+Protected routes (PrivateRoute)
+
+🧮 Sorting & Filtering
+
+Sort posts by:
+
+Newest / Oldest
+
+Popularity (optional)
+
+Filter posts by:
+
+Category
+
+Author
+
+🎨 UI/UX
+
+Responsive layout using Bootstrap CSS
+
+Clean navigation using a Navbar
+
+Mobile-friendly components
+
+📂 Project Structure
+src/
+ ├─ components/
+ │   ├─ Navbar.jsx
+ │   ├─ PostList.jsx
+ │   ├─ PostForm.jsx
+ │   ├─ PostDetails.jsx
+ │   ├─ PrivateRoute.jsx
+ │   ├─ PostLogin.jsx
+ │
+ ├─ redux/
+ │   ├─ store.js
+ │   ├─ Slices/
+ │   │   ├─ AuthSlice.js
+ │   │   ├─ PostSlice.js
+ │
+ ├─ App.js
+ ├─ index.js
+
+🛠️ Technologies Used
+
+React JS
+
+React Router DOM
+
+Redux Toolkit
+
+Redux Thunk
+
+Bootstrap
+
+JSON Server
+
+Axios
+
+🔧 Installation & Setup
+1️⃣ Clone the Repository
+cd blog-app
+
+2️⃣ Install Dependencies
+npm install
+
+3️⃣ Start JSON Server
+
+Inside the project root, create a file named db.json:
+
+{
+  "posts": [],
+  "users": [
+    {
+      "id": 1,
+      "email": "test@gmail.com",
+      "password": "123456",
+      "name": "John Doe"
+    }
+  ]
+}
+
+
+Run the server:
+
+npx json-server --watch db.json --port 3000
+
+4️⃣ Start React App
+npm start
+
+🔐 Authentication Logic
+
+Login is handled by querying JSON Server:
+
+
+
+
+If credentials match → login success
+Else → login failed
+
+Session is maintained using localStorage.
+
+✨ Demo (Optional)
+
+
+
+🧪 Future Enhancements
+
+Register page
+
+JWT-based real authentication
+
+Dark/Light theme toggle
+
+User profile page
+
+Post like/comment system
+

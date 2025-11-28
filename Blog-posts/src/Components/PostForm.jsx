@@ -17,18 +17,33 @@ export default function PostForm() {
     category: "",
   });
 
-  // Wait until posts are loaded
+  const [loading, setLoading] = useState(false);
+
+  // Fetch posts if not loaded
   useEffect(() => {
     if (posts.length === 0) dispatch(fetchPosts());
   }, [dispatch, posts.length]);
 
-  // Populate form only when posts are loaded
+  // Initialize form if editing
   useEffect(() => {
     if (id && posts.length > 0) {
+      setLoading(true);
       const postToEdit = posts.find((p) => p.id === Number(id));
-      if (postToEdit) setForm(postToEdit);
+      if (postToEdit) {
+        setForm({
+          title: postToEdit.title || "",
+          description: postToEdit.description || "",
+          date: postToEdit.date || "",
+          image: postToEdit.image || "",
+          category: postToEdit.category || "",
+        });
+      } else {
+        alert("Post not found!");
+        navigate("/");
+      }
+      setLoading(false);
     }
-  }, [id, posts]);
+  }, [id, posts, navigate]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -36,39 +51,39 @@ export default function PostForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (id) {
-      const postToUpdate = posts.find((p) => p.id === Number(id));
-      if (!postToUpdate) return alert("Post not found!");
-
-      // Merge existing post with form values
-      const payload = { ...postToUpdate, ...form, id: Number(id) };
-
-      await dispatch(updatePost(payload));
+      await dispatch(updatePost({ ...form, id: Number(id) }));
+      alert("Post updated successfully!");
     } else {
-      await dispatch(addPost(form));
+      const resultAction = await dispatch(addPost(form));
+      alert("Post added successfully!");
+      setForm({
+        title: "",
+        description: "",
+        date: "",
+        image: "",
+        category: "",
+      });
     }
-
     navigate("/");
   };
 
-  // Prevent form render if editing and posts not loaded yet
-  if (id && posts.length === 0) return <p>Loading...</p>;
+  if (id && loading) return <p className="text-center mt-20">Loading post...</p>;
 
   return (
-    <div className="max-w-xl mx-auto mt-10 bg-white shadow-lg rounded-xl p-8">
-      <h2 className="text-2xl font-bold mb-6 text-center">
+    <div className="max-w-2xl mx-auto mt-12 bg-white shadow-xl rounded-2xl p-10">
+      <h2 className="text-3xl font-bold mb-8 text-center text-gray-900">
         {id ? "Edit Post" : "Add New Post"}
       </h2>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         <input
           type="text"
           name="title"
           placeholder="Post Title"
           value={form.title}
           onChange={handleChange}
-          className="w-full px-4 py-2 border rounded-lg"
+          className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           required
         />
 
@@ -78,7 +93,7 @@ export default function PostForm() {
           value={form.description}
           onChange={handleChange}
           rows="5"
-          className="w-full px-4 py-2 border rounded-lg"
+          className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           required
         />
 
@@ -87,7 +102,7 @@ export default function PostForm() {
           name="date"
           value={form.date}
           onChange={handleChange}
-          className="w-full px-4 py-2 border rounded-lg"
+          className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           required
         />
 
@@ -97,7 +112,7 @@ export default function PostForm() {
           placeholder="Image URL"
           value={form.image}
           onChange={handleChange}
-          className="w-full px-4 py-2 border rounded-lg"
+          className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
         />
 
         <input
@@ -106,13 +121,13 @@ export default function PostForm() {
           placeholder="Category"
           value={form.category}
           onChange={handleChange}
-          className="w-full px-4 py-2 border rounded-lg"
+          className="w-full px-5 py-3 border border-gray-300 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           required
         />
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
+          className="w-full bg-blue-600 text-white py-3 rounded-xl text-lg font-semibold shadow-lg hover:bg-blue-700 transition"
         >
           {id ? "Update Post" : "Add Post"}
         </button>
