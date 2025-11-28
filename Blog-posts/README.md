@@ -1,4 +1,4 @@
-# 📘 React Blog App — README.md
+# 📘 React Blog App
 ## 📝 Project Overview
 
 The React Blog App is a full-featured blogging platform built using React JS, Redux Toolkit, React Router, Bootstrap, and JSON Server.
