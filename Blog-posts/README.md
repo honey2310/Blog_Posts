@@ -1,13 +1,13 @@
-📘 React Blog App — README.md
-📝 Project Overview
+### 📘 React Blog App — README.md
+## 📝 Project Overview
 
 The React Blog App is a full-featured blogging platform built using React JS, Redux Toolkit, React Router, Bootstrap, and JSON Server.
 It allows users to view, add, edit, delete, sort, and filter blog posts, along with a simple login authentication system.
 
 This project is designed as part of the React JS Practical Exam.
 
-🚀 Features
-🧩 Core Features
+## 🚀 Features
+### 🧩 Core Features
 
 View all blog posts
 
@@ -20,7 +20,7 @@ Delete posts
 
 View post details
 
-🔐 Authentication
+## 🔐 Authentication
 
 User Login (using JSON Server /users endpoint)
 
@@ -34,7 +34,7 @@ Delete posts
 
 Protected routes (PrivateRoute)
 
-🧮 Sorting & Filtering
+### 🧮 Sorting & Filtering
 
 Sort posts by:
 
@@ -48,7 +48,7 @@ Category
 
 Author
 
-🎨 UI/UX
+### 🎨 UI/UX
 
 Responsive layout using Bootstrap CSS
 
@@ -75,7 +75,7 @@ src/
  ├─ App.js
  ├─ index.js
 
-🛠️ Technologies Used
+### 🛠️ Technologies Used
 
 React JS
 
@@ -91,7 +91,7 @@ JSON Server
 
 Axios
 
-🔧 Installation & Setup
+## 🔧 Installation & Setup
 1️⃣ Clone the Repository
 cd blog-app
 
@@ -122,31 +122,21 @@ npx json-server --watch db.json --port 3000
 4️⃣ Start React App
 npm start
 
-🔐 Authentication Logic
+### 🔐 Authentication Logic
 
 Login is handled by querying JSON Server:
-
-
-
-
 If credentials match → login success
 Else → login failed
 
 Session is maintained using localStorage.
 
-✨ Demo (Optional)
+### ✨ Demo (Optional)
+
+
+https://github.com/user-attachments/assets/d09f6fb3-9c38-4168-874d-5673d2371c31
 
 
 
-🧪 Future Enhancements
 
-Register page
 
-JWT-based real authentication
-
-Dark/Light theme toggle
-
-User profile page
-
-Post like/comment system
 
