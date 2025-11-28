@@ -1,4 +1,4 @@
-### 📘 React Blog App — README.md
+# 📘 React Blog App — README.md
 ## 📝 Project Overview
 
 The React Blog App is a full-featured blogging platform built using React JS, Redux Toolkit, React Router, Bootstrap, and JSON Server.
@@ -9,16 +9,16 @@ This project is designed as part of the React JS Practical Exam.
 ## 🚀 Features
 ### 🧩 Core Features
 
-View all blog posts
+~View all blog posts
 
-Add new blog posts
+~Add new blog posts
 (title, description, date, image, category)
 
-Edit existing posts
+~Edit existing posts
 
-Delete posts
+~Delete posts
 
-View post details
+~View post details
 
 ## 🔐 Authentication
 
@@ -56,7 +56,7 @@ Clean navigation using a Navbar
 
 Mobile-friendly components
 
-📂 Project Structure
+## 📂 Project Structure
 src/
  ├─ components/
  │   ├─ Navbar.jsx
@@ -89,38 +89,7 @@ Bootstrap
 
 JSON Server
 
-Axios
-
-## 🔧 Installation & Setup
-1️⃣ Clone the Repository
-cd blog-app
-
-2️⃣ Install Dependencies
-npm install
-
-3️⃣ Start JSON Server
-
-Inside the project root, create a file named db.json:
-
-{
-  "posts": [],
-  "users": [
-    {
-      "id": 1,
-      "email": "test@gmail.com",
-      "password": "123456",
-      "name": "John Doe"
-    }
-  ]
-}
-
-
-Run the server:
-
-npx json-server --watch db.json --port 3000
-
-4️⃣ Start React App
-npm start
+fetch
 
 ### 🔐 Authentication Logic
 
