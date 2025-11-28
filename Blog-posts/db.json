@@ -1,0 +1,42 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "The Future of Web Development",
+      "description": "A deep dive into upcoming trends in web development, including AI-driven tools, new frameworks, and performance optimization techniques.",
+      "date": "2024-11-01",
+      "image": "https://www.blogtyrant.com/wp-content/uploads/2016/06/bestof.png",
+      "category": "Technology",
+      "author": "Admin",
+      "views": 1050
+    },
+    {
+      "id": 2,
+      "title": "React vs Vue: Which One Should You Choose?",
+      "description": "A detailed comparison between React and Vue, their ecosystem, learning curve, and performance benchmarks.",
+      "date": "2024-10-15",
+      "image": "https://www.blogtyrant.com/wp-content/uploads/2016/06/bestof.png",
+      "category": "Programming",
+      "author": "John Doe",
+      "views": 870
+    },
+    {
+      "id": "4",
+      "title": "How to Build a Blog App in React",
+      "description": "Beginner-friendly guide on creating a complete blog application using React, Redux, and JSON Server.",
+      "date": "2024-09-10",
+      "image": "https://www.blogtyrant.com/wp-content/uploads/2016/06/bestof.png",
+      "category": "React",
+      "author": "Admin",
+      "views": 650
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "email": "admin@gmail.com",
+      "password": "123456",
+      "name": "Site Admin"
+    }
+  ]
+}
